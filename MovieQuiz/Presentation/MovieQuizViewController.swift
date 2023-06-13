@@ -9,19 +9,10 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        yesButton.layer.borderWidth = 2
-        yesButton.layer.cornerRadius = 8.0
-        yesButton.clipsToBounds = true
-        noButton.layer.borderWidth = 2
-        noButton.layer.cornerRadius = 8.0
-        noButton.clipsToBounds = true
         let firstQuestion = self.questions[self.currentQuestionIndex]
         let viewModel = self.convert(model: firstQuestion)
         show(quiz: viewModel)
     }
-    
-    
-    
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     
@@ -46,7 +37,6 @@ final class MovieQuizViewController: UIViewController {
         let givenAnswer = true
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
     }
     @IBAction private func noButtonClicked(_ sender: Any) {
         let currentQuestion = questions[currentQuestionIndex] // 1
@@ -54,7 +44,6 @@ final class MovieQuizViewController: UIViewController {
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
-
     struct QuizQuestion {
         let image: String
         let text: String
@@ -114,13 +103,11 @@ final class MovieQuizViewController: UIViewController {
             questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
         return questionStep
     }
-    
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
-    
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questions.count - 1 {
             let text = "Ваш результат: \(correctAnswers)/10"
@@ -131,10 +118,8 @@ final class MovieQuizViewController: UIViewController {
             show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
-            
             let nextQuestion = questions[currentQuestionIndex]
             let viewModel = convert(model: nextQuestion)
-            
             show(quiz: viewModel)
         }
     }
@@ -144,12 +129,10 @@ final class MovieQuizViewController: UIViewController {
         let buttonText: String
     }
     private func show(quiz result: QuizResultsViewModel) {
-       
         let alert = UIAlertController(
             title: result.title,
             message: result.text,
             preferredStyle: .alert)
-        
         let action = UIAlertAction(title: result.buttonText, style: .default) { _ in
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
