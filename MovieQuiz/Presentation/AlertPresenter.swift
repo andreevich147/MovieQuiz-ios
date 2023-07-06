@@ -14,7 +14,7 @@ protocol AlertPresenter {
 }
 
 final class AlertPresenterImpl {
-  private  weak var viewController: UIViewController?
+    private  weak var viewController: UIViewController?
     
     init(viewController: UIViewController? = nil) {
         self.viewController = viewController
@@ -28,13 +28,13 @@ extension AlertPresenterImpl: AlertPresenter {
             message: alertModel.message,
             preferredStyle: .alert)
         let action = UIAlertAction(title: alertModel.buttonText, style: .default) {_ in
-           
+            
             alertModel.buttonAction()
             
         }
         alert.addAction(action)
         viewController?.present(alert, animated: true)
-       
-
+        
+        
     }
 }

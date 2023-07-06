@@ -22,13 +22,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         
         alertPresenter = AlertPresenterImpl(viewController: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
-          statisticService = StatisticServiceImplementation()
-
-          showLoadingIndicator()
-          questionFactory?.loadData()
+        statisticService = StatisticServiceImplementation()
+        
+        showLoadingIndicator()
+        questionFactory?.loadData()
     }
     // MARK: - QuestionFactoryDelegate
-
+    
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
@@ -46,8 +46,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         if isCorrect {
             correctAnswers += 1
         }
-        imageView.layer.masksToBounds = true // даём разрешение на рисование рамки
-        imageView.layer.borderWidth = 8 // толщина рамки
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ?  UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         self.yesButton.isEnabled = false
         self.noButton.isEnabled = false
@@ -99,7 +99,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     private func showFinalResults() {
         
         statisticService?.store(correct: correctAnswers, total: questionsAmount)
-
+        
         let alertModel = AlertModel(
             title: "Игра окончена",
             message: makeResultMessage(),
@@ -115,16 +115,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
     }
     
     private func makeResultMessage() -> String {
-       
+        
         guard let statisticService = statisticService, let bestGame = statisticService.bestGame else {
             assertionFailure("error message")
             return ""
         }
         
-    
-       let totalPlayesCountLine = "Количество сыгранных квизов: \(statisticService.gamesCount)"
-      let currentGameResultLine = "Ваш результат: \(correctAnswers)\\\(questionsAmount)"
-      let  bestGameInfoLine = "Рекорд: \(bestGame.correct)\\\(bestGame.total) + \(bestGame.date.dateTimeString)"
+        
+        let totalPlayesCountLine = "Количество сыгранных квизов: \(statisticService.gamesCount)"
+        let currentGameResultLine = "Ваш результат: \(correctAnswers)\\\(questionsAmount)"
+        let  bestGameInfoLine = "Рекорд: \(bestGame.correct)\\\(bestGame.total) + \(bestGame.date.dateTimeString)"
         let averageAccuracyLine = "Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
         
         let components: [String] = [currentGameResultLine, totalPlayesCountLine, bestGameInfoLine, averageAccuracyLine]
@@ -157,7 +157,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate  
         activityIndicator.isHidden = true
         questionFactory?.requestNextQuestion()
     }
-
+    
     func didFailToLoadData(with error: Error) {
         showNetworkError(message: error.localizedDescription)
     }
