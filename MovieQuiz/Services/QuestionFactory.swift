@@ -55,6 +55,7 @@ final class QuestionFactory: QuestionFactoryProtocol   {
     private let moviesLoader: MoviesLoading
     private weak var delegate: QuestionFactoryDelegate?
     
+    
     init(moviesLoader: MoviesLoading, delegate: QuestionFactoryDelegate?) {
         self.moviesLoader = moviesLoader
         self.delegate = delegate
@@ -100,7 +101,7 @@ final class QuestionFactory: QuestionFactoryProtocol   {
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.delegate?.didReceiveNextQuestion(question: question)
+                self.delegate?.didRecieveNextQuestion(question: question)
             }
         }
     }
